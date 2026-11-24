@@ -1,28 +1,2 @@
 WIP:
-    @Disabled
-    GitHub_Issues
 
-    VALIDATE Local Run of Repo ch02 across browsers (Safari & Edge) on one machine
-
-    ######  Run on Infrastructure:
-        Windows_Family
-        Windows_Laptop
-        Mac
-        Linux
-
-    ###### WIP:
-        WebDriver:
-            VERIFY what are the affected child classes of 'Base Utility'
-            VERIFY what class uses POM commons-io 2.15.1
-            VERIFY element with type By for xpath Id
-            VERIFY element with type By for xpath Name
-            VERIFY element with type By for xpath Id and getTyxt (Type cast?)
-            VERIFY Frame with WebElement getText
-            VERIFY Window with WebElement and getText
-            VERIFY WindowHandle WebElement and getText
-            VALIDATE log SPLF
-            VALIDATE log 4kj?
-            VALIDATE charted progress with JavDocs
-            VALIDATE Local Run of Repo ch02 across browsers (Safari & Edge) on one machine
-            VALIDATE Run Repo_ch02 Maven project (one POM) across two machine (Windows & Mac)
-            VALIDATE skill to run the official Selenium Dev Repo on GitHub
