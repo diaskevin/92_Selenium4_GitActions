@@ -1,0 +1,125 @@
+If your Selenium tests pass individually but fail when you run the entire suite, the issue is usually one of these:
+
+1. Shared WebDriver Instance
+
+A test leaves the browser in an unexpected state for the next test.
+
+Bad
+
+Java
+WebDriver driver;
+ 
+@BeforeAll
+static void setup() {
+driver = new ChromeDriver();
+}
+ 
+
+Better
+
+Java
+WebDriver driver;
+ 
+@BeforeEach
+void setup() {
+driver = new ChromeDriver();
+}
+ 
+@AfterEach
+void tearDown() {
+driver.quit();
+}
+2. Tests Depend on Execution Order
+
+One test creates data that another test expects.
+
+Bad
+
+Java
+@Test
+void login_test() { ... }
+ 
+@Test
+void search_test() {
+// assumes login_test already ran
+}
+
+Each test should be independent.
+
+3. Browser State Not Reset
+
+Cookies, local storage, session storage, or authentication persists between tests.
+
+Add cleanup:
+
+Java
+@AfterEach
+void tearDown() {
+driver.manage().deleteAllCookies();
+driver.quit();
+}
+4. Parallel Execution
+
+JUnit or TestNG may be running tests simultaneously.
+
+Check:
+
+JUnit
+
+.properties
+junit.jupiter.execution.parallel.enabled=false
+
+TestNG
+
+XML
+<suite parallel="false">
+5. Timing Issues
+
+A page loads slower when multiple tests run.
+
+Replace:
+
+Java
+Thread.sleep(2000);
+
+with explicit waits:
+
+Java
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+ 
+WebElement element = wait.until(
+ExpectedConditions.visibilityOfElementLocated(
+By.id("accept")
+)
+);
+6. Static Variables
+
+A common cause that is easy to miss:
+
+Java
+static WebDriver driver;
+static String userName;
+
+Static state is shared across all tests and can cause interference.
+
+7. Test Data Collisions
+
+All tests use the same record:
+
+Java
+user = "testuser";
+
+When running together, one test modifies or deletes data needed by another.
+
+Use unique data:
+
+Java
+String user = "testuser_" + System.currentTimeMillis();
+
+To diagnose further, please paste:
+
+the full error message from the Run All Tests execution,
+your @BeforeEach, @AfterEach, @BeforeAll, and @AfterAll methods,
+whether you're using JUnit 5 or TestNG.
+
+The stack trace will usually reveal the exact cause within a few lines.
