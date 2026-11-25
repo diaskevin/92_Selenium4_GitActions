@@ -33,6 +33,7 @@
                 <configuration>
                     <includes>
                         <include>**/*Test.java</include>
+                        <include>**/*_Test.java</include>
                     </includes>
                     <excludes>
                         <exclude>**/MouseHovers_3_Test.java</exclude>
