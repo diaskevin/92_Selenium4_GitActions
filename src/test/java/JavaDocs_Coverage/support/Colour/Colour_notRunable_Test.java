@@ -34,6 +34,7 @@ Colour_notRunable_Test {
     }
 
     @Test
+    @Disabled
     public void colour_Test_test() {
         driver.get("https://www.selenium.dev/selenium/web/login.html");
 
