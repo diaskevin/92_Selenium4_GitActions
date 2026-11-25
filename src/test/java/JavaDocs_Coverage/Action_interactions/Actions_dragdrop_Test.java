@@ -12,6 +12,18 @@ import java.time.Duration;
 public class Actions_dragdrop_Test {
     WebDriver driver;
 
+ private ChromeOptions getChromeOptions() {
+        ChromeOptions options = new ChromeOptions();
+        if ("true".equalsIgnoreCase(System.getenv("CI")) || "true".equalsIgnoreCase(System.getProperty("headless"))) {
+            options.addArguments("--headless=new");
+            options.addArguments("--no-sandbox");
+            options.addArguments("--disable-dev-shm-usage");
+            options.addArguments("--window-size=1920,1080");
+        }
+        return options;
+    }
+    
+
     @Test
     public void dragDrop_Test() throws InterruptedException {
 
@@ -19,7 +31,7 @@ public class Actions_dragdrop_Test {
         //optional till Selenium 2.0
         //Set system properties for geckodriver
         //System.setProperty("webdriver.chrome.driver", "C:\\qa\\projectShare\\resource\\chromedriver\\chromedriver.exe");
-        driver = new ChromeDriver();
+        driver = new ChromeDriver(getChromeOptions());
 
         String URL = "https://www.selenium.dev/selenium/web/mouse_interaction.html";
 
