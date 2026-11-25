@@ -3,19 +3,32 @@ package SeleniumDev_features.assertions;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Rectangle;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.junit.jupiter.api.AfterEach;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 public class Assertion_Interaction_Test {
     WebDriver driver;
 
+    private ChromeOptions getChromeOptions() {
+        ChromeOptions options = new ChromeOptions();
+        if ("true".equalsIgnoreCase(System.getenv("CI")) || "true".equalsIgnoreCase(System.getProperty("headless"))) {
+            options.addArguments("--headless=new");
+            options.addArguments("--no-sandbox");
+            options.addArguments("--disable-dev-shm-usage");
+            options.addArguments("--window-size=1920,1080");
+        }
+        return options;
+    }
+
     @BeforeEach
     public void checkDesireCap() {
         //System.setProperty("webdriver.chrome.driver", "C:\\qa\\projectShare\\resource\\chromedriver\\chromedriver.exe");
-        driver = new ChromeDriver();
+
+        System.out.println("CI=" + System.getenv("CI"));
+        System.out.println("headless=" + System.getProperty("headless"));
+        driver = new ChromeDriver(getChromeOptions());
     }
 
     //This Test Assertion fails and it continues to conduct the next test
@@ -36,7 +49,7 @@ public class Assertion_Interaction_Test {
         driver.findElement(By.name("email_input")).click();
         driver.findElement(By.name("email_input")).sendKeys("admin11@localhost.dev");
         Thread.sleep(3000);
-        driver.quit();
+        //driver.quit();
     }
 
     //This Test Assertion passes
@@ -82,6 +95,15 @@ public class Assertion_Interaction_Test {
         //fetch the value property associated with the textbox
         String valueInfo = emailTxt.getAttribute("value");
         System.out.println(valueInfo);
-        driver.quit();
+        //driver.quit();
     }
+
+    @AfterEach
+    public void tearDown() {
+        if (driver != null) {
+            driver.quit();
+        }
+    }
+
+
 }
